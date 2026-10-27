@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="ru" data-bs-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Оформление заказа — Винтаж-лавка</title>
+    <meta
+      name="description"
+      content="Оформите заказ в Винтаж-лавке: выберите товар, способ доставки и примените промокод."
+    />
+    <script>
+      try {
+        document.documentElement.setAttribute("data-bs-theme", localStorage.getItem("vl-theme") || "light");
+      } catch (e) {}
+    </script>
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/custom.css" />
+  </head>
+  <body class="d-flex flex-column min-vh-100">
+    <a class="visually-hidden-focusable position-absolute top-0 start-0 p-2 bg-body z-3" href="#main">Перейти к содержимому</a>
+
+    <nav class="navbar navbar-expand-lg sticky-top site-navbar border-bottom" aria-label="Основное меню">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="index.html">
+          <span class="brand-mark bg-primary text-white" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3" /></svg>
+          </span>
+          Винтаж-лавка
+        </a>
+        <div class="d-flex align-items-center gap-1 order-lg-last ms-auto ms-lg-3">
+          <button class="btn btn-link text-body icon-btn position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#favoritesOffcanvas" aria-controls="favoritesOffcanvas" aria-label="Избранное">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.4A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.5 2.7c0 5.8-7.5 10.4-7.5 10.4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></svg>
+            <span class="position-absolute top-0 end-0 badge rounded-pill badge-hit d-none" data-fav-count>0</span>
+          </button>
+          <button class="btn btn-link text-body icon-btn" type="button" data-theme-toggle aria-label="Переключить светлую и тёмную тему">
+            <svg class="theme-icon-dark" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" /></svg>
+            <svg class="theme-icon-light" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4" /></svg>
+          </button>
+          <button class="navbar-toggler ms-1" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Открыть меню">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse" id="mainNav">
+          <ul class="navbar-nav ms-lg-auto gap-lg-2 py-2 py-lg-0 fw-medium">
+            <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+            <li class="nav-item"><a class="nav-link" href="catalog.html">Каталог</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="order.html">Оформить заказ</a></li>
+            <li class="nav-item"><a class="nav-link" href="contacts.html">Контакты</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="main" class="flex-grow-1">
+      <section class="py-5">
+        <div class="container">
+          <nav aria-label="Хлебные крошки">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.html">Главная</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Оформление заказа</li>
+            </ol>
+          </nav>
+          <h1 class="display-5 mb-2">Оформление заказа</h1>
+          <p class="section-lead mb-4">Заполните форму — менеджер перезвонит в течение 15 минут в рабочее время и подтвердит заказ. Оплата при получении.</p>
+
+          <div class="alert alert-danger d-none" id="orderError" role="alert">
+            Проверьте отмеченные поля: часть обязательных данных не заполнена.
+          </div>
+
+          <div class="row g-4 g-lg-5">
+            <div class="col-12 col-lg-7">
+              <form class="needs-validation" id="orderForm" action="order.html" method="get">
+                <fieldset class="card bg-body-tertiary p-4 mb-4">
+                  <legend class="h5 mb-3">1. Контактные данные</legend>
+                  <div class="row g-3">
+                    <div class="col-12">
+                      <label class="form-label" for="name">Имя</label>
+                      <input class="form-control" type="text" id="name" name="name" autocomplete="name" placeholder="Как к вам обращаться" required />
+                      <div class="invalid-feedback">Укажите имя.</div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <label class="form-label" for="email">E-mail</label>
+                      <input class="form-control" type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com" required />
+                      <div class="invalid-feedback">Введите корректный e-mail.</div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <label class="form-label" for="phone">Телефон</label>
+                      <div class="input-group has-validation">
+                        <span class="input-group-text">+7</span>
+                        <input class="form-control" type="tel" id="phone" name="phone" autocomplete="tel-national" placeholder="900 123-45-67" pattern="(\D*\d){10}\D*" required />
+                        <div class="invalid-feedback">Введите 10 цифр номера.</div>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+
+                <fieldset class="card bg-body-tertiary p-4 mb-4">
+                  <legend class="h5 mb-3">2. Товар</legend>
+                  <div class="row g-3 align-items-end">
+                    <div class="col-12 col-md-8">
+                      <label class="form-label" for="product">Выбранный товар</label>
+                      <select class="form-select" id="product" name="product" data-product-options required>
+                        <option value="">Выберите товар</option>
+                      </select>
+                      <div class="invalid-feedback">Выберите товар.</div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                      <label class="form-label" for="qty">Количество</label>
+                      <input class="form-control" type="number" id="qty" name="qty" value="1" min="1" max="10" required />
+                    </div>
+                  </div>
+                </fieldset>
+
+                <fieldset class="card bg-body-tertiary p-4 mb-4">
+                  <legend class="h5 mb-3">3. Доставка</legend>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="delivery" id="deliveryPickup" value="pickup" checked />
+                    <label class="form-check-label" for="deliveryPickup">Самовывоз из лавки <span class="text-body-secondary">— бесплатно</span></label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="delivery" id="deliveryCourier" value="courier" />
+                    <label class="form-check-label" for="deliveryCourier">Курьер по Москве <span class="text-body-secondary">— 390 ₽, от 5 000 ₽ бесплатно</span></label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="delivery" id="deliveryPost" value="post" />
+                    <label class="form-check-label" for="deliveryPost">Почта России <span class="text-body-secondary">— 450 ₽</span></label>
+                  </div>
+                  <div class="collapse" id="addressBlock">
+                    <div class="pt-3">
+                      <label class="form-label" for="address">Адрес доставки</label>
+                      <input class="form-control" type="text" id="address" name="address" autocomplete="street-address" placeholder="Город, улица, дом, квартира" />
+                      <div class="invalid-feedback">Укажите адрес доставки.</div>
+                    </div>
+                  </div>
+                </fieldset>
+
+                <fieldset class="card bg-body-tertiary p-4 mb-4">
+                  <legend class="h5 mb-3">4. Дополнительно</legend>
+                  <div class="mb-3">
+                    <label class="form-label" for="promo">Промокод</label>
+                    <div class="input-group">
+                      <input class="form-control text-uppercase" type="text" id="promo" name="promo" placeholder="Например, VINTAGE10" autocomplete="off" />
+                      <button class="btn btn-outline-primary" type="button" id="promoApply">Применить</button>
+                    </div>
+                    <div class="form-text" id="promoMessage">Промокод VINTAGE10 даёт скидку 10% на товары.</div>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label" for="comment">Комментарий к заказу</label>
+                    <textarea class="form-control" id="comment" name="comment" rows="3" placeholder="Удобное время звонка, пожелания к упаковке"></textarea>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="agree" name="agree" required />
+                    <label class="form-check-label" for="agree">Согласен на обработку персональных данных</label>
+                    <div class="invalid-feedback">Без согласия мы не сможем принять заказ.</div>
+                  </div>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="newsletter" name="newsletter" />
+                    <label class="form-check-label" for="newsletter">Присылать новые находки на e-mail</label>
+                  </div>
+                </fieldset>
+
+                <button class="btn btn-primary btn-lg w-100" type="submit">Отправить заказ</button>
+              </form>
+            </div>
+
+            <div class="col-12 col-lg-5">
+              <aside class="card bg-body-tertiary sticky-lg-top sticky-offset" aria-labelledby="summaryTitle">
+                <div class="card-body p-4">
+                  <h2 class="h5 mb-3" id="summaryTitle">Ваш заказ</h2>
+                  <div class="d-flex gap-3 align-items-center mb-3">
+                    <img class="rounded object-fit-cover" src="images/favicon.svg" alt="" width="96" height="72" id="summaryImage" />
+                    <div>
+                      <p class="fw-semibold mb-0" id="summaryName">Товар не выбран</p>
+                      <p class="small text-body-secondary mb-0" id="summaryUnit">Выберите товар в форме</p>
+                    </div>
+                  </div>
+                  <ul class="list-group list-group-flush mb-3">
+                    <li class="list-group-item bg-transparent d-flex justify-content-between px-0"><span>Товары</span><span id="summarySubtotal">0 ₽</span></li>
+                    <li class="list-group-item bg-transparent d-flex justify-content-between px-0"><span>Доставка</span><span id="summaryDelivery">бесплатно</span></li>
+                    <li class="list-group-item bg-transparent d-flex justify-content-between px-0 text-success d-none" id="summaryDiscountRow"><span>Скидка по промокоду</span><span id="summaryDiscount">0 ₽</span></li>
+                  </ul>
+                  <div class="d-flex justify-content-between align-items-baseline">
+                    <span class="fw-semibold">Итого</span>
+                    <span class="product-price fs-2" id="summaryTotal">0 ₽</span>
+                  </div>
+                </div>
+                <div class="card-footer bg-transparent small text-body-secondary p-4">
+                  Оплата картой или наличными при получении. Возврат в течение 14 дней.
+                </div>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+
+    <footer class="bg-body text-body-secondary pt-5 pb-4 border-top" data-bs-theme="dark">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-12 col-lg-5">
+            <h2 class="h5 text-body">Винтаж-лавка</h2>
+            <p class="mb-0">Небольшой магазин старинных и винтажных вещей: камеры, инструменты, канцелярия и предметы интерьера. Возвращаем вещам вторую жизнь.</p>
+          </div>
+          <div class="col-6 col-lg-3">
+            <h2 class="h6 text-body">Разделы</h2>
+            <ul class="list-unstyled d-grid gap-2 mb-0">
+              <li><a class="text-reset text-decoration-none" href="index.html">Главная</a></li>
+              <li><a class="text-reset text-decoration-none" href="catalog.html">Каталог</a></li>
+              <li><a class="text-reset text-decoration-none" href="order.html">Оформить заказ</a></li>
+              <li><a class="text-reset text-decoration-none" href="contacts.html">Контакты</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-lg-4">
+            <h2 class="h6 text-body">Контакты</h2>
+            <ul class="list-unstyled d-grid gap-2 mb-0">
+              <li>Москва, ул. Пушкина, д. Колотушкина</li>
+              <li><a class="text-reset text-decoration-none" href="tel:+70000000000">+7 (000) 000-00-00</a></li>
+              <li><a class="text-reset text-decoration-none" href="mailto:hello@example.com">hello@example.com</a></li>
+              <li>Пн–пт 10:00–19:00</li>
+            </ul>
+          </div>
+        </div>
+        <hr class="my-4" />
+        <div class="d-flex flex-column flex-sm-row justify-content-between gap-2 small">
+          <span>© <span data-year>2026</span> Винтаж-лавка. Учебный проект</span>
+          <span>Сделано на Bootstrap 5.3</span>
+        </div>
+      </div>
+    </footer>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="favoritesOffcanvas" aria-labelledby="favoritesTitle">
+      <div class="offcanvas-header border-bottom">
+        <h2 class="offcanvas-title h5" id="favoritesTitle">Избранное</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
+      </div>
+      <div class="offcanvas-body">
+        <p class="text-body-secondary" data-fav-empty>Здесь появятся вещи, которые вы отметите сердечком.</p>
+        <ul class="list-group list-group-flush" data-fav-list></ul>
+      </div>
+      <div class="p-3 border-top">
+        <a class="btn btn-primary w-100" href="catalog.html">Перейти в каталог</a>
+      </div>
+    </div>
+
+    <div class="modal fade" id="orderSuccessModal" tabindex="-1" aria-labelledby="orderSuccessTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title h5" id="orderSuccessTitle">Заказ принят</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-success mb-3" role="status">
+              Спасибо, <strong id="successName">покупатель</strong>! Номер заказа: <strong id="successNumber">№ 00000</strong>.
+            </div>
+            <p class="mb-1"><span class="text-body-secondary">Товар:</span> <span id="successProduct"></span></p>
+            <p class="mb-1"><span class="text-body-secondary">Доставка:</span> <span id="successDelivery"></span></p>
+            <p class="mb-0"><span class="text-body-secondary">К оплате:</span> <strong id="successTotal"></strong></p>
+          </div>
+          <div class="modal-footer">
+            <a class="btn btn-outline-primary" href="catalog.html">Продолжить покупки</a>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Готово</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/order.js"></script>
+  </body>
+</html>
